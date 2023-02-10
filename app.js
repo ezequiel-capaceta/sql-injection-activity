@@ -16,6 +16,7 @@ const db = new sqlite3.Database(':memory:');
 db.serialize(function () {
     db.run("CREATE TABLE user (username TEXT, password TEXT, title TEXT)");
     db.run("INSERT INTO user VALUES ('privilegedUser', 'privilegedUser1', 'Administrator')");
+    db.run("INSERT INTO user VALUES ('testuser', 'test123', 'Test')");
 });
 
 // ROUTES
@@ -27,7 +28,7 @@ app.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const query = `SELECT * FROM user WHERE username = '${username}' AND password = '${password}'`;
+    const query = "SELECT title FROM user WHERE username = '" + username + "' AND password = '" +  password + "'";
     console.log('------------ username', username)
     console.log('------------ password', password)
     console.log('------------ query', query)
